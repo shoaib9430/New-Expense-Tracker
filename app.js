@@ -44,7 +44,7 @@ ReportFiles.belongsTo(User);
 
 const app = express();
 app.use(cors({
-  origin: 'http://43.205.233.208:3000',
+  origin: 'http://43.205.233.208',
 }));
 app.use(bodyParser.json());
 app.use(helmet());
