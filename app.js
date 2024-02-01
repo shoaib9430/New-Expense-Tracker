@@ -49,6 +49,8 @@ app.use(helmet());
 app.use(compression());
 app.use(morgan("combined", { stream: accessLogStream }));
 
+app.use(express.static(path.join(__dirname, "public")));
+
 //middleware
 app.use("/user", loginRoutes);
 app.use("/expense", expenseRoutes);
