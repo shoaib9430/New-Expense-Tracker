@@ -43,7 +43,9 @@ User.hasMany(ReportFiles);
 ReportFiles.belongsTo(User);
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'http://43.205.233.208:3000',
+}));
 app.use(bodyParser.json());
 app.use(helmet());
 app.use(compression());
@@ -59,7 +61,7 @@ app.use("/premium", premiumRoutes);
 app.use("/password", resetRoutes);
 app.use((req, res) => {
   console.log(req.url);
-  res.send(path.join(__dirname, `/public${req.url}`));
+  res.send(path.join(__dirname, `/public/${req.url}`));
 });
 
 sequelize.sync().then(() => {
