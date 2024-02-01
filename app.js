@@ -27,6 +27,8 @@ const accessLogStream = fs.createWriteStream(
   { flags: "a" }
 );
 
+console.log("data")
+
 //table relations
 User.hasMany(Expense);
 Expense.belongsTo(User);
@@ -55,7 +57,7 @@ app.use("/premium", premiumRoutes);
 app.use("/password", resetRoutes);
 app.use((req, res) => {
   console.log(req.url);
-  res.send(path.join(__dirname, `/public/${req.url}`));
+  res.send(path.join(__dirname, `/public${req.url}`));
 });
 
 sequelize.sync().then(() => {
