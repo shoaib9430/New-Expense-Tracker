@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const helmet = require("helmet");
+// const helmet = require("helmet");
 const compression = require("compression");
 const morgan = require("morgan");
 require("dotenv").config();
@@ -47,7 +47,7 @@ app.use(cors({
   origin: 'http://43.205.233.208',
 }));
 app.use(bodyParser.json());
-app.use(helmet());
+// app.use(helmet());
 app.use(compression());
 app.use(morgan("combined", { stream: accessLogStream }));
 
