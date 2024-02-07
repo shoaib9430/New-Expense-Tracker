@@ -1,8 +1,9 @@
+//imports
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-// const helmet = require("helmet");
-// const compression = require("compression");
+const helmet = require("helmet");
+const compression = require("compression");
 const morgan = require("morgan");
 require("dotenv").config();
 const fs = require("fs");
@@ -22,12 +23,6 @@ const expenseRoutes = require("./routes/expenseRoutes");
 const purchaseRoutes = require("./routes/purchaseRoutes");
 const premiumRoutes = require("./routes/premiumRoutes");
 const resetRoutes = require("./routes/passwordResetRoutes");
-const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, "accesslog.txt"),
-  { flags: "a" }
-);
-
-console.log("data")
 
 //table relations
 User.hasMany(Expense);
@@ -43,14 +38,13 @@ User.hasMany(ReportFiles);
 ReportFiles.belongsTo(User);
 
 const app = express();
-app.use(cors({
-  origin: 'http://43.205.233.208',
-}));
-app.use(bodyParser.json());
-// app.use(helmet());
-// app.use(compression());
-app.use(morgan("combined", { stream: accessLogStream }));
 
+app.use(cors({
+  origin: ["http://43.205.233.208:3000"]
+}));
+
+app.use(bodyParser.json());
+app.use(compression());
 app.use(express.static(path.join(__dirname, "public")));
 
 //middleware
@@ -61,7 +55,7 @@ app.use("/premium", premiumRoutes);
 app.use("/password", resetRoutes);
 app.use((req, res) => {
   console.log(req.url);
-  res.send(path.join(__dirname, `/public/${req.url}`));
+  res.sendFile(path.join(__dirname, `/public/${req.url}`));
 });
 
 sequelize.sync().then(() => {
